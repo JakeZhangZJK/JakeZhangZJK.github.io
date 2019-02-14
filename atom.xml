@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2019-02-05T13:14:40.424Z</updated>
+  <updated>2019-02-14T12:09:13.700Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -17,19 +17,44 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>Hello World</title>
-    <link href="http://yoursite.com/2019/02/05/hello-world/"/>
-    <id>http://yoursite.com/2019/02/05/hello-world/</id>
-    <published>2019-02-05T13:14:40.423Z</published>
-    <updated>2019-02-05T13:14:40.424Z</updated>
+    <title>hexo搭建个人博客感想</title>
+    <link href="http://yoursite.com/2019/02/14/hexo%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E6%84%9F%E6%83%B3/"/>
+    <id>http://yoursite.com/2019/02/14/hexo搭建个人博客感想/</id>
+    <published>2019-02-14T11:24:59.000Z</published>
+    <updated>2019-02-14T12:09:13.700Z</updated>
     
-    <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p><h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p><h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p><h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p><h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>]]></content>
+    <content type="html"><![CDATA[<p>###哈解析步骤计划下病床上看出不出在不差多少</p><p><strong>1.大概说说</strong></p><p>副书记的客观性张不开嘴心内科仓库类国防生的价格就是速度快</p>]]></content>
     
     <summary type="html">
     
       
       
-        &lt;p&gt;Welcome to &lt;a href=&quot;https://hexo.io/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Hexo&lt;/a&gt;! This is your very first post. Check &lt;a href=&quot;https://hexo.
+        &lt;p&gt;###哈解析步骤计划下病床上看出不出在不差多少&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;1.大概说说&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;副书记的客观性张不开嘴心内科仓库类国防生的价格就是速度快&lt;/p&gt;
+
+      
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>终于建成了</title>
+    <link href="http://yoursite.com/2019/02/05/hello-world/"/>
+    <id>http://yoursite.com/2019/02/05/hello-world/</id>
+    <published>2019-02-05T13:14:40.423Z</published>
+    <updated>2019-02-14T12:07:47.449Z</updated>
+    
+    <content type="html"><![CDATA[<p>弄了我好多天，今天终于能访问了，今晚肯定睡着都会笑，拥有一个自己的网站是我们码农界的信仰，虽然很多东西还要花时间慢慢部署，但总算迈出第一步了，哈哈</p><h2 id="Quick-Start（这是一级标题语法）"><a href="#Quick-Start（这是一级标题语法）" class="headerlink" title="Quick Start（这是一级标题语法）"></a>Quick Start（这是一级标题语法）</h2><h3 id="Create-a-new-post（这是二级标题语法）"><a href="#Create-a-new-post（这是二级标题语法）" class="headerlink" title="Create a new post（这是二级标题语法）"></a>Create a new post（这是二级标题语法）</h3><pre><code class="这是注释的语法&quot;"></code></pre><p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a>（这是超链接语法）</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;弄了我好多天，今天终于能访问了，今晚肯定睡着都会笑，拥有一个自己的网站是我们码农界的信仰，虽然很多东西还要花时间慢慢部署，但总算迈出第一步了，哈哈&lt;/p&gt;
+&lt;h2 id=&quot;Quick-Start（这是一级标题语法）&quot;&gt;&lt;a href=&quot;#Quick-Start（这是一级标题
       
     
     </summary>
