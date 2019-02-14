@@ -191,7 +191,7 @@
                 
                 <section class="switch-part switch-part2">
                     <div class="widget tagcloud" id="js-tagcloud">
-                        
+                        <a href="/tags/JavaScript-前端学习/" style="font-size: 10px;">-JavaScript -前端学习</a>
                     </div>
                 </section>
                 
@@ -265,6 +265,105 @@
     </div>
 </nav>
       <div class="body-wrap">
+  
+    <article id="post-详述JavaScript数据类型" class="article article-type-post" itemscope="" itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2019/02/14/详述JavaScript数据类型/" class="article-date">
+      <time datetime="2019-02-14T14:16:35.000Z" itemprop="datePublished">2019-02-14</time>
+</a>
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/02/14/详述JavaScript数据类型/">详述JavaScript数据类型</a>
+    </h1>
+  
+
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <p>JavaScript有两种数据类型，分别是基本数据类型和引用数据类型。<br>基本数据类型包括：String、Number、Boolean、Null、Undefined和Symbol（ES6新增的，表示独一无二的值）</p>
+<p>而引用类型统称为Object对象，主要包括对象、数组和函数，下面是它们几种字面量的创建方式：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">  </span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> str = <span class="string">"abc"</span>;<span class="comment">//String</span></span><br><span class="line"><span class="keyword">var</span> num = <span class="number">123</span>;<span class="comment">//number</span></span><br><span class="line"><span class="keyword">var</span> bool = <span class="literal">true</span>;<span class="comment">//boolean</span></span><br><span class="line"><span class="keyword">var</span> n = <span class="literal">null</span>; <span class="comment">//object -----这是因为es设计时认为，null表示空对象指针，只不过值为空，但是代码执行时会正常站位；所以用typeof的时候，会返回"object"。所以一般都会把null当做空对象的占位符。</span></span><br><span class="line"><span class="keyword">var</span> und = <span class="literal">undefined</span>   <span class="comment">//undefined</span></span><br><span class="line"><span class="comment">//symbol</span></span><br><span class="line"><span class="comment">// 没有参数的情况</span></span><br><span class="line"><span class="keyword">var</span> s1 = <span class="built_in">Symbol</span>();</span><br><span class="line"><span class="keyword">var</span> s2 = <span class="built_in">Symbol</span>();</span><br><span class="line">s1 === s2 <span class="comment">// false</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 有参数的情况</span></span><br><span class="line"><span class="keyword">var</span> s1 = <span class="built_in">Symbol</span>(<span class="string">"foo"</span>);</span><br><span class="line"><span class="keyword">var</span> s2 = <span class="built_in">Symbol</span>(<span class="string">"foo"</span>);</span><br><span class="line">s1 === s2  <span class="comment">//false</span></span><br></pre></td></tr></table></figure>
+<h1 id="二、基本数据类型"><a href="#二、基本数据类型" class="headerlink" title="二、基本数据类型"></a>二、基本数据类型</h1><hr>
+<ol>
+<li><strong>值是不可变的</strong></li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">var</span> name = <span class="string">"Jake Zhang"</span>;</span><br><span class="line"></span><br><span class="line">name.toUpperCase();<span class="comment">//输出 JAKE ZHANG</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(name);<span class="comment">// 输出 Jake Zhang</span></span><br></pre></td></tr></table></figure>
+<p>由以上代码可看出基本数据类型的值是不可变的</p>
+<ol start="2">
+<li><p><strong>存放在栈区</strong></p>
+<p>基本类型值指的是简单的数据段，按值访问，可操作保存在变量中的实际的值，其占据空间小、大小固定，属于被频繁使用的数据，所以放入栈（stack）中存储。</p>
+</li>
+<li><p><strong>值的比较</strong></p>
+</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> n = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">var</span> m = <span class="literal">true</span>;</span><br><span class="line"><span class="built_in">console</span>.log(n == m);<span class="comment">//true</span></span><br><span class="line"><span class="built_in">console</span>.log(n === m);<span class="comment">// false</span></span><br></pre></td></tr></table></figure>
+<p>“= =”：只进行值的比较，会进行数据类型转换；<br>“= = =”：不不仅进行值的比较，还会进行数据类型的比较。</p>
+<h1 id="三、引用数据类型"><a href="#三、引用数据类型" class="headerlink" title="三、引用数据类型"></a>三、引用数据类型</h1><hr>
+<ol>
+<li><p><strong>值是可变的</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">  </span><br><span class="line"><span class="keyword">var</span> person = &#123;</span><br><span class="line">	name:<span class="string">'jake'</span>,</span><br><span class="line">      	age:<span class="number">22</span>,</span><br><span class="line">       	action:<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="string">"do something!"</span>)</span><br><span class="line">       &#125;</span><br><span class="line">     &#125;</span><br><span class="line">person.age = <span class="number">23</span>;</span><br><span class="line"><span class="built_in">console</span>.log(person.age)<span class="comment">// 23</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>有上面的代码可看出引用数据 类型可以拥有一个或多个属性和方法，而且是可以动态修改的。</p>
+<ol start="2">
+<li><p><strong>同时存放在栈内存和堆内存</strong></p>
+<p>引用数据类型是存放在堆（heap）中的对象，占据空间大、大小不固定，如果存放在栈中，会影响程序运行的性能；引用数据类型在栈中存储了指针，该指针指向堆中该实体的起始地址，当解释器寻找引用值时，会首先检索其在栈中的地址，取得地址后从堆中获得实体。（有关js中栈和堆的详解可参考文章[(<a href="https://www.cnblogs.com/heioray/p/9487093.html)）" target="_blank" rel="noopener">https://www.cnblogs.com/heioray/p/9487093.html)）</a></p>
+<ol start="3">
+<li><strong>值的比较</strong></li>
+</ol>
+</li>
+</ol>
+<p>当从一个变量向另一个变量赋引用类型的值时，同样也会将存储在变量中的对象的值复制一份到位新变量分配的空间中。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> person1 = &#123;</span><br><span class="line">		  age:<span class="number">20</span></span><br><span class="line">     &#125;</span><br><span class="line">     <span class="keyword">var</span> person2 = person1;</span><br><span class="line">		person2.age = <span class="number">23</span>;</span><br><span class="line">		<span class="built_in">console</span>.log(person1.age = person2.age)<span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+<p>前面讲到基本数据类型和引用数据类型存储于内存中的位置不一样，引用数据类型存储在堆中的对象，与此同时，在栈中存储了指针，而这个指针的指向正是堆中实体的起始位置。变量person1初始化时，person1指针指向该对象{age：20}的地址，将person1赋给person2后，person2又指向该对象{age：20}的地址，这两个变量指向了同一个对象。因此改变其中任何一个变量，都会相互影响。<br><img src="https://img-blog.csdnimg.cn/20190123171842933.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM5NzM1MDQw,size_16,color_FFFFFF,t_70" alt="ZJK">此时，如果取消某一个变量对于原对象的引用，不会影响到另一个变量。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">var a = &#123;age:22&#125;</span><br><span class="line">		var b = a;</span><br><span class="line">		a = 1;</span><br><span class="line">		console.log(b);//&#123;age:22&#125;</span><br></pre></td></tr></table></figure>
+<p>上面代码中，a和b指向同一个对象，然后a的值变为1，这时不会对b产生影响，b还是指向原来的那个对象。      </p>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+
+      
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/JavaScript-前端学习/">-JavaScript -前端学习</a></li></ul>
+    </div>
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+
+
   
     <article id="post-hexo搭建个人博客感想" class="article article-type-post" itemscope="" itemprop="blogPost">
   
