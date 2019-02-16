@@ -17,7 +17,7 @@
 <meta property="og:site_name" content="Jake Zhang">
 <meta property="og:description" content="昨天在看一篇提升js性能的文章中看到数组中reduce()方法的应用，由于我在之前的es6学习中没有了解过这个方法，在我所看的文章中感觉这个方法挺有意思的，然后我查了点资料，前后看了几篇文章，自己找了几个例子敲了敲，瞬间感觉内心美滋滋的，所以今天我总结了下，在这里小结一下reduce()方法的概念和几个小例子。 一、reduce()方法 reduce()方法接收一个函数callbackfn作为累加">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-02-16T15:00:16.536Z">
+<meta property="og:updated_time" content="2019-02-16T15:12:44.103Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="reduce()和reduceRight()方法">
 <meta name="twitter:description" content="昨天在看一篇提升js性能的文章中看到数组中reduce()方法的应用，由于我在之前的es6学习中没有了解过这个方法，在我所看的文章中感觉这个方法挺有意思的，然后我查了点资料，前后看了几篇文章，自己找了几个例子敲了敲，瞬间感觉内心美滋滋的，所以今天我总结了下，在这里小结一下reduce()方法的概念和几个小例子。 一、reduce()方法 reduce()方法接收一个函数callbackfn作为累加">
@@ -320,21 +320,46 @@
 <th></th>
 <th>perValue</th>
 <th>curValue</th>
-<th></th>
 <th>index</th>
-<th></th>
 <th>arr</th>
-<th></th>
 <th>返回值</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td></td>
+<td>第一次回调</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>[0,1,2,3,4]</td>
+<td>1</td>
+</tr>
+<tr>
+<td>第二次回调</td>
+<td>1</td>
+<td>2</td>
+<td>2</td>
+<td>[0,1,2,3,4]</td>
+<td>3</td>
+</tr>
+<tr>
+<td>第三次回调</td>
+<td>3</td>
+<td>3</td>
+<td>3</td>
+<td>[0,1,2,3,4]</td>
+<td>6</td>
+</tr>
+<tr>
+<td>第四次回调</td>
+<td>6</td>
+<td>4</td>
+<td>4</td>
+<td>[0,1,2,3,4]</td>
+<td>10</td>
 </tr>
 </tbody>
 </table>
-<p>| 第一次回调     | 0            || 1      ||1   ||[0,1,2,3,4]||1   |<br>| 第二次回调     | 1            || 2      ||2   ||[0,1,2,3,4]||3    |<br>| 第三次回调     | 3            || 3      ||3   ||[0,1,2,3,4]||6    |<br>| 第四次回调     | 6            || 4      ||4    ||[0,1,2,3,4]||10   |</p>
 <p>上面的示例reduce()方法没有提供initialValue初始值，接下来再上面的示例中，稍作修改，提供一个初始值，这个值为5。这个时候reduce()方法会执行五次回调，每次参数和返回的值如下：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">var</span> arr = [<span class="number">0</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>];</span><br><span class="line"></span><br><span class="line">arr.reduce( <span class="function">(<span class="params">preValue,curValue,index,array</span>) =&gt;</span>(preValue + curValue), <span class="number">5</span>); <span class="comment">//15</span></span><br></pre></td></tr></table></figure></p>
 <table>
 <thead>
@@ -344,9 +369,7 @@
 <th>curValue</th>
 <th></th>
 <th>index</th>
-<th></th>
 <th>arr</th>
-<th></th>
 <th>返回值</th>
 </tr>
 </thead>
@@ -356,14 +379,16 @@
 </tr>
 </tbody>
 </table>
-<p>| 第一次回调     | 5            || 0      ||0  ||[0,1,2,3,4]||5  |<br>| 第二次回调     | 4            || 1      ||1  ||[0,1,2,3,4]||6    |<br>| 第三次回调     | 6            || 2      ||2   ||[0,1,2,3,4]||8    |<br>| 第四次回调     | 8           || 3      ||3    ||[0,1,2,3,4]||11  |<br>| 第五次回调     | 11            || 4      ||4    ||[0,1,2,3,4]||15  |</p>
+<p>| 第一次回调     | 5            | 0      |0  |[0,1,2,3,4]|5  |<br>| 第二次回调     | 4            | 1      |1  |[0,1,2,3,4]|6    |<br>| 第三次回调     | 6            | 2      |2   |[0,1,2,3,4]|8    |<br>| 第四次回调     | 8           | 3      |3    |[0,1,2,3,4]|11  |<br>| 第五次回调     | 11            | 4      |4    |[0,1,2,3,4]|15  |</p>
 <p>上面代码通过reduce()方法一行代码就实现了一个简单的求和运算，是不是感觉hin简洁哟~ 而且性能杠杠滴。<br>没有对比就没有伤害，我们来对比一下我们平时用的for循环和while循环的求和方法以及它们消耗的时间：</p>
 <h4 id="2-for循环"><a href="#2-for循环" class="headerlink" title="2.for循环"></a>2.for循环</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="built_in">console</span>.time(<span class="string">"forLoop"</span>);</span><br><span class="line"><span class="keyword">var</span> arr = [<span class="number">0</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>];</span><br><span class="line"><span class="built_in">Array</span>.prototype.sum = <span class="function"><span class="keyword">function</span> (<span class="params"></span>)</span>&#123;</span><br><span class="line">   <span class="keyword">var</span> sumResult = <span class="number">0</span>;</span><br><span class="line">   <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; <span class="keyword">this</span>.length; i++) &#123;</span><br><span class="line">       sumResult += <span class="built_in">parseInt</span>(<span class="keyword">this</span>[i]);</span><br><span class="line">  		 &#125;</span><br><span class="line">   <span class="keyword">return</span> sumResult;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(arr.sum()); <span class="comment">// 10</span></span><br><span class="line"><span class="built_in">console</span>.timeEnd(<span class="string">"forLoop"</span>);<span class="comment">// forLoop: 0.370849609375ms</span></span><br></pre></td></tr></table></figure>
 <h4 id="3-while循环"><a href="#3-while循环" class="headerlink" title="3.while循环"></a>3.while循环</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="built_in">console</span>.time(<span class="string">"whileLoop"</span>);</span><br><span class="line"><span class="keyword">var</span> arr = [<span class="number">0</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>];</span><br><span class="line"></span><br><span class="line"><span class="built_in">Array</span>.prototype.sum = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">   <span class="keyword">var</span> sumResult = <span class="number">0</span>;</span><br><span class="line">   <span class="keyword">var</span> i = <span class="keyword">this</span>.length;</span><br><span class="line">   <span class="keyword">while</span> (i--) &#123;</span><br><span class="line">       sumResult += <span class="built_in">parseInt</span>(<span class="keyword">this</span>[i]);</span><br><span class="line">  		 &#125;</span><br><span class="line">   <span class="keyword">return</span> sumResult;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(arr.sum()); <span class="comment">// 10</span></span><br><span class="line"><span class="built_in">console</span>.timeEnd(<span class="string">"whileLoop"</span>);<span class="comment">//whileLoop: 0.97509765625ms</span></span><br></pre></td></tr></table></figure>
 <p>回头再看看刚刚写的reduce()方法所用时间：</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="built_in">console</span>.time(<span class="string">"reduceLoop"</span>);</span><br><span class="line"><span class="keyword">var</span> arr = [<span class="number">0</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>];</span><br><span class="line">arr.reduce( <span class="function">(<span class="params">preValue,curValue,index,array</span>) =&gt;</span>(preValue + curValue)) <span class="comment">// 10</span></span><br><span class="line"><span class="built_in">console</span>.timeEnd(<span class="string">"reduceLoop"</span>);<span class="comment">//reduceLoop: 0.08984375ms</span></span><br></pre></td></tr></table></figure>
-<p>从下表可以明显的看出reduce()相较于for循环和while循环性能高了一个数量级，而且代码十分简洁，是不是瞬间有种感觉：原来还可以这样！！<br>|               | for循环      | while循环||reduce()|<br>| ————- | ————- ||——–|——|</p>
-<p>| 消耗时间     | 0.370849609375ms          || 0.97509765625ms      ||0.08984375ms   |</p>
+<p>从下表可以明显的看出reduce()相较于for循环和while循环性能高了一个数量级，而且代码十分简洁，是不是瞬间有种感觉：原来还可以这样！！</p>
+<p>|               | for循环      | while循环|reduce()|</p>
+<p>| ————- | ————-|———-|——–|</p>
+<p>| 消耗时间     | 0.370849609375ms          | 0.97509765625ms      |0.08984375ms   |</p>
 <h3 id="二、几个小案例"><a href="#二、几个小案例" class="headerlink" title="二、几个小案例"></a>二、几个小案例</h3><hr>
 <h4 id="1-同时实现map和filter"><a href="#1-同时实现map和filter" class="headerlink" title="1.同时实现map和filter"></a>1.同时实现map和filter</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">//1.同时实现map和filter</span></span><br><span class="line"><span class="keyword">var</span> numbers = [<span class="number">10</span>,<span class="number">20</span>,<span class="number">30</span>,<span class="number">40</span>];</span><br><span class="line"><span class="keyword">var</span> doubleAndOver50 = numbers.reduce(<span class="function">(<span class="params">resultList,num</span>)=&gt;</span> &#123;</span><br><span class="line">  num = num*<span class="number">2</span>;</span><br><span class="line">  <span class="keyword">if</span> (num &gt; <span class="number">50</span>)&#123;</span><br><span class="line">    resultList.push(num);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> resultList;</span><br><span class="line">&#125;,[]);</span><br><span class="line">doubleAndOver50;<span class="comment">//[60, 80]</span></span><br></pre></td></tr></table></figure>
 <h4 id="2-统计数组中相同项的个数"><a href="#2-统计数组中相同项的个数" class="headerlink" title="2.统计数组中相同项的个数"></a>2.统计数组中相同项的个数</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//2.统计数组中相同项的个数</span></span><br><span class="line">    <span class="keyword">var</span> cars = [<span class="string">"BMW"</span>,<span class="string">"benz"</span>,<span class="string">"benz"</span>,<span class="string">"BMW"</span>,<span class="string">"大众汽车"</span>,<span class="string">"大众汽车"</span>,<span class="string">"兰博基尼"</span>];</span><br><span class="line">    <span class="keyword">var</span> carsObj = cars.reduce(<span class="function"><span class="keyword">function</span> (<span class="params">obj,name</span>) </span>&#123;</span><br><span class="line">      obj[name] = obj[name]? ++obj[name]:<span class="number">1</span>;</span><br><span class="line">      <span class="keyword">return</span> obj;</span><br><span class="line">    &#125;,&#123;&#125;);</span><br><span class="line">    carsObj;  <span class="comment">//&#123;BMW: 2, benz: 2, 大众汽车: 2, 兰博基尼: 1&#125;</span></span><br></pre></td></tr></table></figure>
@@ -384,7 +409,7 @@
         <p><span>本文标题:</span><a href="/2019/02/16/reduce-和reduceRight-方法/">reduce()和reduceRight()方法</a></p>
         <p><span>文章作者:</span><a href="/" title="访问 Jake Zhang 的个人博客">Jake Zhang</a></p>
         <p><span>发布时间:</span>2019年02月16日 - 21时50分</p>
-        <p><span>最后更新:</span>2019年02月16日 - 23时00分</p>
+        <p><span>最后更新:</span>2019年02月16日 - 23时12分</p>
         <p>
             <span>原始链接:</span><a class="post-url" href="/2019/02/16/reduce-和reduceRight-方法/" title="reduce()和reduceRight()方法">http://yoursite.com/2019/02/16/reduce-和reduceRight-方法/</a>
             <span class="copy-path" data-clipboard-text="原文: http://yoursite.com/2019/02/16/reduce-和reduceRight-方法/　　作者: Jake Zhang" title=""></span>
