@@ -17,7 +17,7 @@
 <meta property="og:site_name" content="Jake Zhang">
 <meta property="og:description" content="好久前就想用hexo搭建一个自己的博客，闲来无聊写点东西，但一直都没有付诸行动，直到我在CSDN注册了账号，在我刷博客时，偶然发现一个hexo搭建个人博客的教程，结果弄了我整整一天，硬是访问不了，后来问了一个朋友又要了一个教程，才发现我看的教程有个关键点没写（域名三次解析及注意事项），到今天终于能访问了，今晚肯定睡着都会笑，拥有一个自己搭建的博客是每一个码农的信仰，虽然很多东西还要花时间慢慢部署，">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-02-16T09:05:34.992Z">
+<meta property="og:updated_time" content="2019-02-16T09:13:09.184Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="hexo github搭建个人博客的感想">
 <meta name="twitter:description" content="好久前就想用hexo搭建一个自己的博客，闲来无聊写点东西，但一直都没有付诸行动，直到我在CSDN注册了账号，在我刷博客时，偶然发现一个hexo搭建个人博客的教程，结果弄了我整整一天，硬是访问不了，后来问了一个朋友又要了一个教程，才发现我看的教程有个关键点没写（域名三次解析及注意事项），到今天终于能访问了，今晚肯定睡着都会笑，拥有一个自己搭建的博客是每一个码农的信仰，虽然很多东西还要花时间慢慢部署，">
@@ -190,7 +190,7 @@
                 
                 <section class="switch-part switch-part2">
                     <div class="widget tagcloud" id="js-tagcloud">
-                        <a href="/tags/JavaScript-前端学习/" style="font-size: 10px;">-JavaScript -前端学习</a> <a href="/tags/总结/" style="font-size: 10px;">总结</a> <a href="/tags/感想/" style="font-size: 10px;">感想</a>
+                        <a href="/tags/JavaScript/" style="font-size: 10px;">JavaScript</a> <a href="/tags/前端/" style="font-size: 10px;">前端</a> <a href="/tags/总结/" style="font-size: 10px;">总结</a> <a href="/tags/感想/" style="font-size: 10px;">感想</a>
                     </div>
                 </section>
                 
@@ -303,25 +303,17 @@
     
     
       <p>好久前就想用hexo搭建一个自己的博客，闲来无聊写点东西，但一直都没有付诸行动，直到我在CSDN注册了账号，在我刷博客时，偶然发现一个hexo搭建个人博客的教程，结果弄了我整整一天，硬是访问不了，后来问了一个朋友又要了一个教程，才发现我看的教程有个关键点没写（域名三次解析及注意事项），到今天终于能访问了，今晚肯定睡着都会笑，拥有一个自己搭建的博客是每一个码农的信仰，虽然很多东西还要花时间慢慢部署，但总算迈出第一步了，教程我把我朋友给我的放这，有想搭建个人博客的可以参考参考<a href="教程">https://zhuanlan.zhihu.com/p/26625249</a>哈哈，我呢先来熟悉哈Markdown的语法，然后把我CSDN的文章搬过来</p>
-<p>#1.标题</p>
-<p>第一种是使用 # 表示标题，其中 # 号必须在行首，</p>
+<h1 id="1-标题"><a href="#1-标题" class="headerlink" title="1.标题"></a>1.标题</h1><p>第一种是使用 # 表示标题，其中 # 号必须在行首，</p>
 <p>第二种是使用 === 或者 — 表示。</p>
-<p>#这是一级标题</p>
-<p>##这是二级标题</p>
-<p>###这是三级标题</p>
-<p>#2.分割线</p>
-<p>使用三个或以上的 - 或者 * 表示，且这一行只有符号，注意不要被识别为二级标题即可，例如中间或者前面可以加空格。</p>
+<h1 id="这是一级标题"><a href="#这是一级标题" class="headerlink" title="这是一级标题"></a>这是一级标题</h1><h2 id="这是二级标题"><a href="#这是二级标题" class="headerlink" title="这是二级标题"></a>这是二级标题</h2><h3 id="这是三级标题"><a href="#这是三级标题" class="headerlink" title="这是三级标题"></a>这是三级标题</h3><h1 id="2-分割线"><a href="#2-分割线" class="headerlink" title="2.分割线"></a>2.分割线</h1><p>使用三个或以上的 - 或者 * 表示，且这一行只有符号，注意不要被识别为二级标题即可，例如中间或者前面可以加空格。</p>
 <hr>
 <hr>
-<p>#3.斜体和粗体</p>
-<p>使用*和**分别表示斜体和粗体，</p>
+<h1 id="3-斜体和粗体"><a href="#3-斜体和粗体" class="headerlink" title="3.斜体和粗体"></a>3.斜体和粗体</h1><p>使用*和**分别表示斜体和粗体，</p>
 <p><em>我是斜体</em></p>
 <p><strong>我是粗体</strong></p>
 <p><strong><em>又斜又粗</em></strong></p>
-<p>#4.超链接和图片</p>
-<p>超链接和图片的写法类似，图片尽在超链接前面多了一个文字描述，一般是<a href="链接">点我跳转</a>&lt;–这个就是超链接。</p>
-<p>#5.无序列表</p>
-<p>使用+、-和*表示无序列表，前后刘一行空白，可嵌套，例如：</p>
+<h1 id="4-超链接和图片"><a href="#4-超链接和图片" class="headerlink" title="4.超链接和图片"></a>4.超链接和图片</h1><p>超链接和图片的写法类似，图片尽在超链接前面多了一个文字描述，一般是<a href="链接">点我跳转</a>&lt;–这个就是超链接。</p>
+<h1 id="5-无序列表"><a href="#5-无序列表" class="headerlink" title="5.无序列表"></a>5.无序列表</h1><p>使用+、-和*表示无序列表，前后刘一行空白，可嵌套，例如：</p>
 <ul>
 <li>AAA<ul>
 <li>A1</li>
@@ -333,14 +325,12 @@
 </ul>
 </li>
 </ul>
-<p>#6.有序列表</p>
-<p>使用 ‘1.’ （点号后面有个空格）表示有序列表，可嵌套。</p>
+<h1 id="6-有序列表"><a href="#6-有序列表" class="headerlink" title="6.有序列表"></a>6.有序列表</h1><p>使用 ‘1.’ （点号后面有个空格）表示有序列表，可嵌套。</p>
 <pre><code>1. A
    1. A1
    2. A2
        1. a1
-</code></pre><p>#7.文字引用</p>
-<p>使用 &gt; 表示，可以有多个 &gt;，表示层级更深，例如</p>
+</code></pre><h1 id="7-文字引用"><a href="#7-文字引用" class="headerlink" title="7.文字引用"></a>7.文字引用</h1><p>使用 &gt; 表示，可以有多个 &gt;，表示层级更深，例如</p>
 <blockquote>
 <p>第一层</p>
 <blockquote>
@@ -353,8 +343,7 @@
 <blockquote>
 <p>跳出来要空一行</p>
 </blockquote>
-<p>#8.代码块</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">这里面放代码。。。</span><br></pre></td></tr></table></figure>
+<h1 id="8-代码块"><a href="#8-代码块" class="headerlink" title="8.代码块"></a>8.代码块</h1><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">这里面放代码。。。</span><br></pre></td></tr></table></figure>
 <p>差不多这些就是常用的了，当然还有很多，以后碰到在更新。。。</p>
 
     
@@ -368,7 +357,7 @@
         <p><span>本文标题:</span><a href="/2019/02/14/hexo搭建个人博客感想/">hexo github搭建个人博客的感想</a></p>
         <p><span>文章作者:</span><a href="/" title="访问 Jake Zhang 的个人博客">Jake Zhang</a></p>
         <p><span>发布时间:</span>2019年02月14日 - 19时24分</p>
-        <p><span>最后更新:</span>2019年02月16日 - 17时05分</p>
+        <p><span>最后更新:</span>2019年02月16日 - 17时13分</p>
         <p>
             <span>原始链接:</span><a class="post-url" href="/2019/02/14/hexo搭建个人博客感想/" title="hexo github搭建个人博客的感想">http://yoursite.com/2019/02/14/hexo搭建个人博客感想/</a>
             <span class="copy-path" data-clipboard-text="原文: http://yoursite.com/2019/02/14/hexo搭建个人博客感想/　　作者: Jake Zhang" title=""></span>
@@ -400,7 +389,7 @@
 
     <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
-    
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#1-标题"><span class="toc-number">1.</span> <span class="toc-text">1.标题</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#这是一级标题"><span class="toc-number">2.</span> <span class="toc-text">这是一级标题</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#这是二级标题"><span class="toc-number">2.1.</span> <span class="toc-text">这是二级标题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#这是三级标题"><span class="toc-number">2.1.1.</span> <span class="toc-text">这是三级标题</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2-分割线"><span class="toc-number">3.</span> <span class="toc-text">2.分割线</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#3-斜体和粗体"><span class="toc-number">4.</span> <span class="toc-text">3.斜体和粗体</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#4-超链接和图片"><span class="toc-number">5.</span> <span class="toc-text">4.超链接和图片</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#5-无序列表"><span class="toc-number">6.</span> <span class="toc-text">5.无序列表</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#6-有序列表"><span class="toc-number">7.</span> <span class="toc-text">6.有序列表</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#7-文字引用"><span class="toc-number">8.</span> <span class="toc-text">7.文字引用</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#8-代码块"><span class="toc-number">9.</span> <span class="toc-text">8.代码块</span></a></li></ol>
 </div>
 <style>
     .left-col .switch-btn {
