@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  <meta name="baidu-site-verification" content="L6Lm9d5Crl">
+  
+  
+  
+  
+  <title>JavaScript面向对象（1）----封装 | Jake Zhang</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="1、js面向对象的概念（个人理解）（1）面向对象，即OOP（Object Oriented Programming），是计算机的一种编程架构，OOP的基本原则是计算机是由子程序作用的单个或者多个对象组合而成，包含属性和方法的对象是类的实例，但是JavaScript中没有类的概念，而是直接使用对象来实现编程。（2）js面向对象是一种思想，在我的理解中，对象由属性和方法组成。属性可以理解为对象特征的载">
+<meta name="keywords" content="前端,javaScript">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JavaScript面向对象（1）----封装">
+<meta property="og:url" content="http://yoursite.com/2019/02/17/JavaScript面向对象（1）-封装/index.html">
+<meta property="og:site_name" content="Jake Zhang">
+<meta property="og:description" content="1、js面向对象的概念（个人理解）（1）面向对象，即OOP（Object Oriented Programming），是计算机的一种编程架构，OOP的基本原则是计算机是由子程序作用的单个或者多个对象组合而成，包含属性和方法的对象是类的实例，但是JavaScript中没有类的概念，而是直接使用对象来实现编程。（2）js面向对象是一种思想，在我的理解中，对象由属性和方法组成。属性可以理解为对象特征的载">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20190203133652677.gif">
+<meta property="og:updated_time" content="2019-02-16T16:10:12.422Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="JavaScript面向对象（1）----封装">
+<meta name="twitter:description" content="1、js面向对象的概念（个人理解）（1）面向对象，即OOP（Object Oriented Programming），是计算机的一种编程架构，OOP的基本原则是计算机是由子程序作用的单个或者多个对象组合而成，包含属性和方法的对象是类的实例，但是JavaScript中没有类的概念，而是直接使用对象来实现编程。（2）js面向对象是一种思想，在我的理解中，对象由属性和方法组成。属性可以理解为对象特征的载">
+<meta name="twitter:image" content="https://img-blog.csdnimg.cn/20190203133652677.gif">
+  
+    <link rel="alternative" href="/atom.xml" title="Jake Zhang" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/img/favicon.png">
+  
+  
+  <link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/font-awesome/css/font-awesome.min.css">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  
+  
+      <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  
+  <!-- 加载特效 -->
+    <script src="/js/pace.js"></script>
+    <link href="/css/pace/pace-theme-flash.css" rel="stylesheet">
+  <script>
+      var yiliaConfig = {
+          fancybox: true,
+          animate: true,
+          isHome: false,
+          isPost: true,
+          isArchive: false,
+          isTag: false,
+          isCategory: false,
+          open_in_new: false
+      }
+  </script>
+</head></html>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        
+<script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+
+        <a href="/" class="profilepic">
+            
+            <img lazy-src="/img/avatar1.png" class="js-avatar">
+            
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/">Jake Zhang</a></h1>
+        </hgroup>
+        
+        <p class="header-subtitle">简单的~重复，复杂的~拆分</p>
+        
+        
+            <form>
+                <input type="text" class="st-default-search-input search" id="local-search-input" placeholder="搜索一下" autocomplete="off">
+            </form>
+            <div id="local-search-result"></div>
+        
+        
+            <script type="text/javascript">
+                (function() {
+                    'use strict';
+                    function getMatchData(keyword, data) {
+                        var matchData = [];
+                        for(var i =0;i<data.length;i++){
+                            if(data[i].title.toLowerCase().indexOf(keyword)>=0) 
+                                matchData.push(data[i])
+                        }
+                        return matchData;
+                    }
+                    var $input = $('#local-search-input');
+                    var $resultContent = $('#local-search-result');
+                    $input.keyup(function(){
+                        $.ajax({
+                            url: '/search.json',
+                            dataType: "json",
+                            success: function( json ) {
+                                var str='<ul class=\"search-result-list\">';                
+                                var keyword = $input.val().trim().toLowerCase();
+                                $resultContent.innerHTML = "";
+                                if ($input.val().trim().length <= 0) {
+                                    $resultContent.empty();
+                                    $('#switch-area').show();
+                                    return;
+                                }
+                                var results = getMatchData(keyword, json);
+                                if(results.length === 0){
+                                    $resultContent.empty();
+                                    $('#switch-area').show();
+                                    return;
+                                } 
+                                for(var i =0; i<results.length; i++){
+                                    str += "<li><a href='"+ results[i].url +"' class='search-result-title'>"+ results[i].title +"</a></li>";
+                                }
+                                str += "</ul>";
+                                $resultContent.empty();
+                                $resultContent.append(str);
+                                $('#switch-area').hide();
+                            }
+                        });
+                    });
+                })();
+            </script>
+        
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        <div class="icon-wrap icon-link hide" data-idx="2">
+                            <div class="loopback_l"></div>
+                            <div class="loopback_r"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>菜单</li>
+                        <li>标签</li>
+                        
+                        <li>友情链接</li>
+                        
+                        
+                        <li>关于我</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/archives/">归档</a></li>
+                        
+                            <li><a href="/about/">关于我</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fl github" target="_blank" href="https://github.com/JakeZhangZJK" title="github">github</a>
+                            
+                                <a class="fl rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        <a href="/tags/JavaScript/" style="font-size: 15px;">JavaScript</a> <a href="/tags/Javaascript/" style="font-size: 10px;">Javaascript</a> <a href="/tags/javaScript/" style="font-size: 10px;">javaScript</a> <a href="/tags/vue/" style="font-size: 10px;">vue</a> <a href="/tags/前端/" style="font-size: 20px;">前端</a> <a href="/tags/总结/" style="font-size: 10px;">总结</a> <a href="/tags/感想/" style="font-size: 10px;">感想</a>
+                    </div>
+                </section>
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a target="_blank" class="main-nav-link switch-friends-link" href="http://blog.csdn.net/baidu_21483933">csdn</a>
+                    
+                      <a target="_blank" class="main-nav-link switch-friends-link" href="https://segmentfault.com/blog/maocg_web">segmentfault</a>
+                    
+                      <a target="_blank" class="main-nav-link switch-friends-link" href="http://www.jianshu.com/users/eb37ef89c746/latest_articles">简书</a>
+                    
+                    </div>
+                </section>
+                
+                
+                
+                <section class="switch-part switch-part4">
+                
+                    <div id="js-aboutme">爱动漫,爱游戏,爱编程,爱运动,爱的太多了!</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>
+</div>
+
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">Jake Zhang</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                
+                    <img lazy-src="/img/avatar1.png" class="js-avatar">
+                
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页">Jake Zhang</a></h1>
+            </hgroup>
+            
+            <p class="header-subtitle">简单的~重复，复杂的~拆分</p>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/archives/">归档</a></li>
+                
+                    <li><a href="/about/">关于我</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                <div class="social">
+                    
+                        <a class="github" target="_blank" href="https://github.com/JakeZhangZJK" title="github">github</a>
+                    
+                        <a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+                    
+                </div>
+            </nav>
+        </header>
+    </div>
+</nav>
+      <div class="body-wrap"><article id="post-JavaScript面向对象（1）-封装" class="article article-type-post" itemscope="" itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2019/02/17/JavaScript面向对象（1）-封装/" class="article-date">
+      <time datetime="2019-02-16T16:02:02.000Z" itemprop="datePublished">2019-02-17</time>
+</a>
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      JavaScript面向对象（1）----封装
+    </h1>
+  
+
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javaScript/">javaScript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/前端/">前端</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+  <div class="article-entry" itemprop="articleBody">
+  
+    
+    
+      <h2 id="1、js面向对象的概念（个人理解）"><a href="#1、js面向对象的概念（个人理解）" class="headerlink" title="1、js面向对象的概念（个人理解）"></a>1、js面向对象的概念（个人理解）</h2><p>（1）面向对象，即OOP（Object Oriented Programming），是计算机的一种编程架构，OOP的基本原则是计算机是由子程序作用的单个或者多个对象组合而成，包含属性和方法的对象是类的实例，但是JavaScript中没有类的概念，而是直接使用对象来实现编程。<br>（2）js面向对象是一种思想，在我的理解中，对象由属性和方法组成。属性可以理解为对象特征的载体，是静态的；方法可以理解为对象的行为，是动态的。比如：在汽车这个对象中，它的颜色，型号，大小就是它的属性，而行驶则是他的方法。<br>（3）在js中，所有的对象可以分为普通对象和函数对象。而Object ，Function 是JS自带的函数对象。凡是通过 new Function() 创建的对象都是函数对象，其他的都是普通对象。<br>以上是我个人的理解，js面向对象的知识点包括封装、继承和多态等，今天我先用一个小例子分享一下封装，后续的博文会更新继承和多态。<br>关于js面向对象可以看看这篇文章：<a href="https://blog.csdn.net/lihangxiaoji/article/details/79753473" target="_blank" rel="noopener">https://blog.csdn.net/lihangxiaoji/article/details/79753473</a><br>那在js中怎么创建和操作对象呢，下面通过代码来一看究竟：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line">             <span class="comment">//三大类型</span></span><br><span class="line">	<span class="comment">//1.Array(数组类型)</span></span><br><span class="line">	<span class="comment">//(1).使用Array构造函数</span></span><br><span class="line">	<span class="keyword">var</span> arr = <span class="keyword">new</span> <span class="built_in">Array</span>();</span><br><span class="line">	arr[<span class="number">0</span>] = <span class="string">'a'</span>;</span><br><span class="line">	arr[<span class="number">1</span>] = <span class="string">'b'</span>;</span><br><span class="line">	<span class="keyword">var</span> arr2 = <span class="keyword">new</span> <span class="built_in">Array</span>(<span class="string">'x'</span>,<span class="string">'y'</span>,<span class="string">'z'</span>);</span><br><span class="line">	<span class="comment">//(2).使用字面量表示法</span></span><br><span class="line">	<span class="keyword">var</span> arr3 = [<span class="string">'red'</span>,<span class="string">'green'</span>,<span class="string">'yellow'</span>];</span><br><span class="line">	<span class="built_in">console</span>.log(arr);</span><br><span class="line">	<span class="comment">//2.object类型</span></span><br><span class="line">	<span class="comment">//（1）、object构造函数</span></span><br><span class="line">	<span class="keyword">var</span> person = <span class="keyword">new</span> <span class="built_in">Object</span>();</span><br><span class="line">	person.name = <span class="string">'zjk'</span>;</span><br><span class="line">	<span class="comment">//person[age] = 18; 没有引号</span></span><br><span class="line">	person[<span class="string">'age'</span>] = <span class="number">18</span>;</span><br><span class="line">	<span class="built_in">console</span>.log(person);</span><br><span class="line">	<span class="comment">//（2）、使用字面量表示法</span></span><br><span class="line">	<span class="comment">//A.简单字面量</span></span><br><span class="line">	<span class="keyword">var</span> person2 = &#123;&#125;;</span><br><span class="line">	person2.name = <span class="string">'jack'</span>;</span><br><span class="line">	person2.action = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">		<span class="built_in">console</span>.log(<span class="keyword">this</span>.name);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">//B.嵌套字面量 项目中用的最多</span></span><br><span class="line">	<span class="keyword">var</span> person3 = &#123;</span><br><span class="line">		name:<span class="string">"black jack"</span>,<span class="comment">//name如果是保留字、有连接符/空格，则要'name-p'</span></span><br><span class="line">		age:<span class="number">20</span>,</span><br><span class="line">		action:<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">			<span class="built_in">console</span>.log(<span class="keyword">this</span>.name);</span><br><span class="line">		&#125;</span><br><span class="line">		</span><br><span class="line">	&#125;;</span><br><span class="line">	<span class="comment">//(3)、工厂方式</span></span><br><span class="line">	<span class="function"><span class="keyword">function</span> <span class="title">createObj</span>(<span class="params">name</span>)</span>&#123;</span><br><span class="line">		<span class="keyword">var</span> obj = <span class="keyword">new</span> <span class="built_in">Object</span>()</span><br><span class="line">		obj.name = name;</span><br><span class="line">		obj.showName = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;<span class="built_in">console</span>.log(<span class="keyword">this</span>.name)&#125;;</span><br><span class="line">		<span class="keyword">return</span> obj;</span><br><span class="line">		</span><br><span class="line">	&#125;;</span><br><span class="line">	<span class="keyword">var</span> p =  createObj(<span class="string">'aa'</span>);</span><br><span class="line">	p.showName();</span><br><span class="line">	<span class="comment">//(4).构造函数 驼峰命名</span></span><br><span class="line">	<span class="function"><span class="keyword">function</span> <span class="title">CreateObj2</span>(<span class="params">name</span>)</span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.name = name;</span><br><span class="line">		<span class="keyword">this</span>.showName = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;<span class="built_in">console</span>.log(<span class="keyword">this</span>.name)&#125;;</span><br><span class="line">	&#125;;</span><br><span class="line">	<span class="keyword">var</span> p2 = <span class="keyword">new</span> CreateObj2(<span class="string">'大米'</span>);</span><br><span class="line">	p2.showName();</span><br><span class="line">	</span><br><span class="line"><span class="keyword">var</span> person1 = &#123;</span><br><span class="line">  age:<span class="number">20</span></span><br><span class="line">   &#125;</span><br><span class="line">         <span class="keyword">var</span> person2 = person1;</span><br><span class="line">person2.age = <span class="number">23</span>;</span><br><span class="line"><span class="built_in">console</span>.log(person1.age = person2.age)<span class="comment">// true</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> a = &#123;<span class="attr">age</span>:<span class="number">22</span>&#125;</span><br><span class="line"><span class="keyword">var</span> b = a;</span><br><span class="line">a = <span class="number">1</span>;</span><br><span class="line"><span class="built_in">console</span>.log(b);</span><br></pre></td></tr></table></figure>
+<p>再来看看对象属性有哪些操作：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br></pre></td><td class="code"><pre><span class="line">         <span class="comment">//1.1属性的添加  --&gt; . / []</span></span><br><span class="line"><span class="comment">//二者区别：.是取自身的属性；[]可以是变量</span></span><br><span class="line"><span class="keyword">var</span> obj = &#123;&#125;;</span><br><span class="line">obj.name = <span class="string">"zjk"</span>;</span><br><span class="line">obj[<span class="string">"age"</span>] = <span class="number">20</span>;</span><br><span class="line"><span class="comment">//实例</span></span><br><span class="line"><span class="keyword">var</span> obj2 = &#123;&#125;;</span><br><span class="line">obj2.name = <span class="string">"jack"</span>;</span><br><span class="line">obj2.a = <span class="string">"aaa"</span>;</span><br><span class="line"><span class="keyword">var</span> a = <span class="string">'name'</span>;</span><br><span class="line"><span class="built_in">console</span>.log(obj2[<span class="string">'a'</span>]);<span class="comment">//aaa</span></span><br><span class="line"><span class="built_in">console</span>.log(obj2[a]);<span class="comment">//obj2['name']</span></span><br><span class="line"><span class="comment">//1.2属性删除</span></span><br><span class="line"><span class="keyword">var</span> obj3 = &#123;&#125;;</span><br><span class="line">obj3.name = <span class="string">'zjk'</span>;</span><br><span class="line">obj3.age = <span class="number">20</span>;</span><br><span class="line">obj3.state = <span class="literal">false</span>;</span><br><span class="line"><span class="keyword">delete</span> obj3.name;<span class="comment">//删除name属性  obj3['name']</span></span><br><span class="line"><span class="comment">//2.检测属性  判断对象中是否存在该属性</span></span><br><span class="line"><span class="comment">// in 运算符  继承过来的也能获取到</span></span><br><span class="line"><span class="keyword">var</span> obj4 = &#123;</span><br><span class="line">	name:<span class="string">'zjk'</span>,</span><br><span class="line">	age:<span class="number">20</span></span><br><span class="line">&#125;;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">'name'</span> <span class="keyword">in</span> obj4);</span><br><span class="line"><span class="comment">//hasOwnroperty()方法</span></span><br><span class="line"><span class="keyword">var</span> obj5 = &#123;</span><br><span class="line">	name:<span class="string">'zjk'</span>,</span><br><span class="line">	age:<span class="number">20</span></span><br><span class="line">&#125;;</span><br><span class="line">obj5.hasOwnProperty(<span class="string">'name'</span>);</span><br><span class="line"><span class="keyword">var</span> a = <span class="string">'name'</span>;</span><br><span class="line">obj5.hasOwnProperty(a);</span><br><span class="line"><span class="comment">//!=undefined 值的判断</span></span><br><span class="line"><span class="built_in">console</span>.log(obj5.name !=<span class="literal">undefined</span>);<span class="comment">//=赋值；==判断（比较两个值是否匹配，不进行类型匹配）；===全等（两个值要要进行类型匹配）</span></span><br><span class="line"><span class="comment">//3.枚举属性</span></span><br><span class="line"><span class="comment">//(1).for in</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> o = &#123;</span><br><span class="line">	name:<span class="string">'zjk'</span>,</span><br><span class="line">	age:<span class="number">20</span></span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">var</span> a <span class="keyword">in</span> o)&#123;<span class="comment">//for(属性 in 对象)</span></span><br><span class="line">	<span class="built_in">console</span>.log(a);<span class="comment">//name age</span></span><br><span class="line">	<span class="built_in">console</span>.log(o[a])<span class="comment">//zjk 20</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> arr = [<span class="string">'a'</span>,<span class="string">'b'</span>,<span class="string">'c'</span>,<span class="string">'d'</span>];</span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">var</span> a <span class="keyword">in</span> arr)&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(a);<span class="comment">//获取索引</span></span><br><span class="line">	<span class="built_in">console</span>.log(arr[a]);<span class="comment">//获取值</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//(2)forEach()  这个也是常用的一个遍历数组的方法</span></span><br><span class="line"><span class="keyword">var</span> arr2 = [<span class="string">'a'</span>,<span class="string">'b'</span>,<span class="string">'c'</span>,<span class="string">'d'</span>];</span><br><span class="line">arr2.forEach(<span class="function"><span class="keyword">function</span>(<span class="params">item,index</span>)</span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(item);</span><br><span class="line">	<span class="comment">//return item 不行</span></span><br><span class="line">&#125;);</span><br><span class="line"><span class="comment">//（3）map() 回调函数中支持return返回值 用的多</span></span><br><span class="line"><span class="keyword">var</span> arr3 = [<span class="string">'a'</span>,<span class="string">'b'</span>,<span class="string">'c'</span>,<span class="string">'d'</span>];</span><br><span class="line">arr3.map(<span class="function"><span class="keyword">function</span>(<span class="params">item,index</span>)</span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(item);</span><br><span class="line">	<span class="keyword">return</span> item ;</span><br><span class="line">&#125;);</span><br><span class="line"><span class="comment">//for()</span></span><br><span class="line"><span class="comment">//4.序列化 JSON.parse()//对象字符串转为对象(深拷贝)  JSON.stringity()//对象转为对象字符串</span></span><br><span class="line"><span class="keyword">var</span> o = &#123;<span class="comment">//这是一个对象</span></span><br><span class="line">	name:<span class="string">'zjk'</span>,</span><br><span class="line">	age:<span class="number">20</span></span><br><span class="line">&#125;;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="keyword">typeof</span> <span class="built_in">JSON</span>.stringify(o));<span class="comment">//string  对象转化为对象字符串</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="keyword">typeof</span> o);<span class="comment">//object</span></span><br></pre></td></tr></table></figure>
+<p>对js面向对象有所了解后，我们来看个简单的，但也是项目中百分百会做碰到例子——表单校验，在学过面向对象后，要逐渐地把以前面向过程式开发转向面向对象。我在这里放了三个封装程度不同的版本，还有过程式开发的，我们一起来看看：</p>
+<p><strong>过程式</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">   $(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">   <span class="comment">//正则</span></span><br><span class="line"><span class="comment">// var filter  = /^[\u4e00-\u9fa5]&#123;2,4&#125;$/;</span></span><br><span class="line">   <span class="comment">// var filter  = /^((\+?86)|(\(\+86\)))?(13[012356789][0-9]&#123;8&#125;|15[012356789][0-9]&#123;8&#125;|18[02356789][0-9]&#123;8&#125;|147[0-9]&#123;8&#125;|1349[0-9]&#123;7&#125;)$/;</span></span><br><span class="line">   <span class="comment">//var filter  = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]&#123;2,4&#125;)+$/;</span></span><br><span class="line">   </span><br><span class="line"></span><br><span class="line">   <span class="comment">//1、成为焦点  错误提示框隐藏</span></span><br><span class="line">   $(<span class="string">".list li input"</span>).on(<span class="string">'focus'</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">       $(<span class="keyword">this</span>).siblings(<span class="string">".tip-error"</span>).hide();  <span class="comment">//find()   next()   siblings()</span></span><br><span class="line">   &#125;);</span><br><span class="line">   </span><br><span class="line">   <span class="comment">//2、失去焦点       1）为空判断   2）格式匹配（正则）</span></span><br><span class="line">   $(<span class="string">".list .name"</span>).blur(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">       <span class="keyword">var</span> cur = $(<span class="keyword">this</span>);</span><br><span class="line">       <span class="keyword">var</span> value = cur.val();</span><br><span class="line">       <span class="keyword">var</span> filter  = <span class="regexp">/^[\u4e00-\u9fa5]&#123;2,4&#125;$/</span>;   <span class="comment">//正则</span></span><br><span class="line">       fromEvent (cur,value,filter,<span class="string">'用户名不能为空'</span>,<span class="string">'用户名输入错误'</span>);</span><br><span class="line">   &#125;);</span><br><span class="line">   $(<span class="string">".list .mobile"</span>).blur(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">       <span class="keyword">var</span> cur = $(<span class="keyword">this</span>);</span><br><span class="line">       <span class="keyword">var</span> value = cur.val();</span><br><span class="line">       <span class="keyword">var</span> filter  = <span class="regexp">/^((\+?86)|(\(\+86\)))?(13[012356789][0-9]&#123;8&#125;|15[012356789][0-9]&#123;8&#125;|18[02356789][0-9]&#123;8&#125;|147[0-9]&#123;8&#125;|1349[0-9]&#123;7&#125;)$/</span>;   <span class="comment">//正则</span></span><br><span class="line">       fromEvent (cur,value,filter,<span class="string">'手机号不能为空'</span>,<span class="string">'手机号输入错误'</span>);</span><br><span class="line">   &#125;);</span><br><span class="line">   $(<span class="string">".list .email"</span>).blur(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">       <span class="keyword">var</span> cur = $(<span class="keyword">this</span>);</span><br><span class="line">       <span class="keyword">var</span> value = cur.val();</span><br><span class="line">       <span class="keyword">var</span> filter  = <span class="regexp">/^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]&#123;2,4&#125;)+$/</span>;   <span class="comment">//正则</span></span><br><span class="line">     </span><br><span class="line">       fromEvent (cur,value,filter,<span class="string">'邮箱不能为空'</span>,<span class="string">'邮箱输入错误'</span>);</span><br><span class="line">   &#125;);</span><br><span class="line">   <span class="comment">//公共方法</span></span><br><span class="line">   <span class="function"><span class="keyword">function</span> <span class="title">fromEvent</span> (<span class="params">cur,value,filter,text1,text2</span>)</span>&#123;</span><br><span class="line">       <span class="keyword">if</span>(value ==<span class="string">''</span>)&#123;</span><br><span class="line">           cur.siblings(<span class="string">".tip-error"</span>).show().text(text1);</span><br><span class="line">       &#125;<span class="keyword">else</span> <span class="keyword">if</span>(!filter.test(value))&#123;   <span class="comment">//正则匹配</span></span><br><span class="line">            cur.siblings(<span class="string">".tip-error"</span>).show().text(text2);</span><br><span class="line">       &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">           cur.siblings(<span class="string">".tip-error"</span>).hide();</span><br><span class="line">       &#125;</span><br><span class="line">   &#125;;</span><br><span class="line">   <span class="comment">//3、提交 （AJAX)</span></span><br><span class="line">   $(<span class="string">".list .btn-submit"</span>).on(<span class="string">'click'</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">       <span class="keyword">var</span> _name = $.trim($(<span class="string">".name"</span>).val()),</span><br><span class="line">           _mobile = $.trim($(<span class="string">".mobile"</span>).val()),</span><br><span class="line">           _email = $.trim($(<span class="string">".email"</span>).val()),</span><br><span class="line">           _age = $.trim($(<span class="string">".age"</span>).val()),</span><br><span class="line">           _address = $.trim($(<span class="string">".address"</span>).val());</span><br><span class="line">       <span class="keyword">var</span> data =&#123;</span><br><span class="line">           name:_name,</span><br><span class="line">           mobile:_mobile,</span><br><span class="line">           email:_email,</span><br><span class="line">           age:_age,</span><br><span class="line">           address:_address</span><br><span class="line">       &#125;;</span><br><span class="line">       <span class="keyword">if</span>(_name==<span class="string">''</span>|| _mobile==<span class="string">''</span> || _email ==<span class="string">''</span> || $(<span class="string">".tip-error"</span>).is(<span class="string">":visible"</span>)) &#123;</span><br><span class="line">           alert(<span class="string">"请输入正确信息"</span>);</span><br><span class="line">       &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">           $.ajax(&#123;</span><br><span class="line">               type: <span class="string">"POST"</span>, <span class="comment">//请求方式</span></span><br><span class="line">               url: <span class="string">"http://localhost:3000/form_info"</span>, <span class="comment">//请求路径</span></span><br><span class="line">               <span class="keyword">async</span>: <span class="literal">true</span>, <span class="comment">//异步</span></span><br><span class="line">               data: data,  <span class="comment">//传参</span></span><br><span class="line">               dataType: <span class="string">'json'</span>, <span class="comment">//返回值类型</span></span><br><span class="line">               success: <span class="function"><span class="keyword">function</span> (<span class="params">msg</span>) </span>&#123;</span><br><span class="line">                   <span class="keyword">if</span>(msg.code ==<span class="string">'200'</span>)&#123;</span><br><span class="line">                       </span><br><span class="line">                   &#125;</span><br><span class="line">               &#125;,</span><br><span class="line">               error: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">               &#125;</span><br><span class="line">           &#125;);</span><br><span class="line">       &#125;   </span><br><span class="line">     &#125;)</span><br><span class="line">   &#125;)</span><br></pre></td></tr></table></figure>
+<p><strong>封装一</strong>（我最喜欢的）</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">  <span class="keyword">var</span> obj = &#123;</span><br><span class="line">  init:<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">      <span class="keyword">this</span>.bind();</span><br><span class="line">      <span class="keyword">this</span>.todoAjax();</span><br><span class="line">  &#125;,</span><br><span class="line">  bind:<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">      <span class="keyword">var</span> self = <span class="keyword">this</span>;</span><br><span class="line">      <span class="comment">//1、成为焦点  错误提示框隐藏</span></span><br><span class="line">      $(<span class="string">".list li input"</span>).on(<span class="string">'focus'</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">          $(<span class="keyword">this</span>).siblings(<span class="string">".tip-error"</span>).hide();  <span class="comment">//find()   next()   siblings()</span></span><br><span class="line">      &#125;);</span><br><span class="line">      <span class="comment">//2、失去焦点       1）为空判断   2）格式匹配（正则）</span></span><br><span class="line">      $(<span class="string">".list input"</span>).blur(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">          <span class="keyword">var</span> name = $(<span class="keyword">this</span>).prev().text();</span><br><span class="line">          <span class="keyword">var</span> reg;</span><br><span class="line">          <span class="keyword">switch</span> ($(<span class="keyword">this</span>).attr(<span class="string">"name"</span>)) &#123;</span><br><span class="line">              <span class="keyword">case</span> <span class="string">"name"</span>:</span><br><span class="line">                  reg = <span class="regexp">/^[\u4e00-\u9fa5]&#123;2,4&#125;$/</span>;</span><br><span class="line">                  <span class="keyword">break</span>;</span><br><span class="line">              <span class="keyword">case</span> <span class="string">"mobile"</span>:</span><br><span class="line">                  reg = <span class="regexp">/^((\+?86)|(\(\+86\)))?(13[012356789][0-9]&#123;8&#125;|15[012356789][0-9]&#123;8&#125;|18[02356789][0-9]&#123;8&#125;|147[0-9]&#123;8&#125;|1349[0-9]&#123;7&#125;)$/</span>;</span><br><span class="line">                  <span class="keyword">break</span>;</span><br><span class="line">              <span class="keyword">case</span> <span class="string">"email"</span>:</span><br><span class="line">                  reg = <span class="regexp">/^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]&#123;2,4&#125;)+$/</span>;</span><br><span class="line">                  <span class="keyword">break</span>;</span><br><span class="line">              <span class="keyword">case</span> <span class="string">"age"</span>:</span><br><span class="line">                  reg = <span class="regexp">/^(?:[1-9]?\d|100)$/</span>;</span><br><span class="line">                  <span class="keyword">break</span>;</span><br><span class="line">          &#125;</span><br><span class="line">          self.formEvent($(<span class="keyword">this</span>), $(<span class="keyword">this</span>).val(), name, reg);</span><br><span class="line">      &#125;);</span><br><span class="line">  &#125;,</span><br><span class="line">   formEvent:<span class="function"><span class="keyword">function</span>(<span class="params">cur,value,name,reg</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span>(value ==<span class="string">''</span>)&#123;</span><br><span class="line">    cur.siblings(<span class="string">".tip-error"</span>).show().text(name + <span class="string">"不能为空！"</span>);</span><br><span class="line">  &#125;<span class="keyword">else</span> <span class="keyword">if</span>(!reg.test(value))&#123;   <span class="comment">//正则匹配</span></span><br><span class="line">    cur.siblings(<span class="string">".tip-error"</span>).show().text(name + <span class="string">"输入错误！"</span>);</span><br><span class="line">  &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">    cur.siblings(<span class="string">".tip-error"</span>).hide();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;,</span><br><span class="line">  todoAjax:<span class="function"><span class="keyword">function</span> (<span class="params"></span>)</span>&#123;</span><br><span class="line">      $(<span class="string">".list .btn-submit"</span>).on(<span class="string">'click'</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">          <span class="keyword">var</span> _name = $.trim($(<span class="string">".name"</span>).val()),</span><br><span class="line">              _mobile = $.trim($(<span class="string">".mobile"</span>).val()),</span><br><span class="line">              _email = $.trim($(<span class="string">".email"</span>).val()),</span><br><span class="line">              _age = $.trim($(<span class="string">".age"</span>).val()),</span><br><span class="line">              _address = $.trim($(<span class="string">".address"</span>).val());</span><br><span class="line">          <span class="keyword">var</span> data =&#123;</span><br><span class="line">              name:_name,</span><br><span class="line">              mobile:_mobile,</span><br><span class="line">              email:_email,</span><br><span class="line">              age:_age,</span><br><span class="line">              address:_address</span><br><span class="line">          &#125;;</span><br><span class="line">          <span class="keyword">if</span>(_name==<span class="string">''</span>|| _mobile==<span class="string">''</span> || _email ==<span class="string">''</span> || $(<span class="string">".tip-error"</span>).is(<span class="string">":visible"</span>)) &#123;</span><br><span class="line">              alert(<span class="string">"请输入正确信息"</span>);</span><br><span class="line">          &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">              $.ajax(&#123;</span><br><span class="line">                  type: <span class="string">"POST"</span>, <span class="comment">//请求方式</span></span><br><span class="line">                  url: <span class="string">"http://localhost:3333/getlist"</span>, <span class="comment">//请求路径</span></span><br><span class="line">                  <span class="keyword">async</span>: <span class="literal">true</span>, <span class="comment">//异步</span></span><br><span class="line">                  data: data,  <span class="comment">//传参</span></span><br><span class="line">                  dataType: <span class="string">'json'</span>, <span class="comment">//返回值类型</span></span><br><span class="line">                  success: <span class="function"><span class="keyword">function</span> (<span class="params">msg</span>) </span>&#123;<span class="comment">//msg 响应数据</span></span><br><span class="line">                      <span class="keyword">if</span>(msg.code ==<span class="string">'200'</span>)&#123;</span><br><span class="line">                          </span><br><span class="line">                      &#125;</span><br><span class="line">                  &#125;,</span><br><span class="line">                  error: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">                  &#125;</span><br><span class="line">              &#125;);</span><br><span class="line">          &#125;   </span><br><span class="line">      &#125;)</span><br><span class="line">  &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  $(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  obj.init();</span><br><span class="line">  &#125;)</span><br></pre></td></tr></table></figure>
+<p><strong>封装二</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">var</span> obj = &#123;</span><br><span class="line">    init:<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.bind();</span><br><span class="line">        <span class="keyword">this</span>.todoAjax();</span><br><span class="line">    &#125;,</span><br><span class="line">    formEvent:<span class="function"><span class="keyword">function</span>(<span class="params">cur,value,filter,text1,text2</span>)</span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(value ==<span class="string">''</span>)&#123;</span><br><span class="line">            cur.siblings(<span class="string">".tip-error"</span>).show().text(text1);</span><br><span class="line">        &#125;<span class="keyword">else</span> <span class="keyword">if</span>(!filter.test(value))&#123;   <span class="comment">//正则匹配</span></span><br><span class="line">             cur.siblings(<span class="string">".tip-error"</span>).show().text(text2);</span><br><span class="line">        &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">            cur.siblings(<span class="string">".tip-error"</span>).hide();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    bind:<span class="function"><span class="keyword">function</span> (<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="keyword">var</span> self = <span class="keyword">this</span>;</span><br><span class="line">        <span class="comment">//1、成为焦点  错误提示框隐藏</span></span><br><span class="line">        $(<span class="string">".list li input"</span>).on(<span class="string">'focus'</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">            $(<span class="keyword">this</span>).siblings(<span class="string">".tip-error"</span>).hide();  <span class="comment">//find()   next()   siblings()</span></span><br><span class="line">        &#125;);</span><br><span class="line">        <span class="comment">//2、失去焦点       1）为空判断   2）格式匹配（正则）</span></span><br><span class="line">        $(<span class="string">".list .name"</span>).blur(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">            <span class="keyword">var</span> cur = $(<span class="keyword">this</span>);</span><br><span class="line">            <span class="keyword">var</span> value = cur.val();</span><br><span class="line">            <span class="keyword">var</span> filter  = <span class="regexp">/^[\u4e00-\u9fa5]&#123;2,4&#125;$/</span>;   <span class="comment">//正则</span></span><br><span class="line">            self.formEvent (cur,value,filter,<span class="string">'用户名不能为空'</span>,<span class="string">'用户名输入错误'</span>);</span><br><span class="line">        &#125;);</span><br><span class="line">        $(<span class="string">".list .mobile"</span>).blur(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">            <span class="keyword">var</span> cur = $(<span class="keyword">this</span>);</span><br><span class="line">            <span class="keyword">var</span> value = cur.val();</span><br><span class="line">            <span class="keyword">var</span> filter  = <span class="regexp">/^((\+?86)|(\(\+86\)))?(13[012356789][0-9]&#123;8&#125;|15[012356789][0-9]&#123;8&#125;|18[02356789][0-9]&#123;8&#125;|147[0-9]&#123;8&#125;|1349[0-9]&#123;7&#125;)$/</span>;   <span class="comment">//正则</span></span><br><span class="line">            self.formEvent (cur,value,filter,<span class="string">'手机号不能为空'</span>,<span class="string">'手机号输入错误'</span>);</span><br><span class="line">        &#125;);</span><br><span class="line">        $(<span class="string">".list .email"</span>).blur(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">            <span class="keyword">var</span> cur = $(<span class="keyword">this</span>);</span><br><span class="line">            <span class="keyword">var</span> value = cur.val();</span><br><span class="line">            <span class="keyword">var</span> filter  = <span class="regexp">/^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]&#123;2,4&#125;)+$/</span>;   <span class="comment">//正则</span></span><br><span class="line">            <span class="keyword">if</span>(value ==<span class="string">''</span>)&#123;</span><br><span class="line">                $(<span class="keyword">this</span>).siblings(<span class="string">".tip-error"</span>).show().text(<span class="string">"邮箱不能为空"</span>);</span><br><span class="line">            &#125;<span class="keyword">else</span> <span class="keyword">if</span>(!filter.test(value))&#123;   <span class="comment">//正则匹配</span></span><br><span class="line">                 $(<span class="keyword">this</span>).siblings(<span class="string">".tip-error"</span>).show().text(<span class="string">"邮箱输入错误"</span>);</span><br><span class="line">            &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">                $(<span class="keyword">this</span>).siblings(<span class="string">".tip-error"</span>).hide();</span><br><span class="line">            &#125;;</span><br><span class="line">            self.formEvent (cur,value,filter,<span class="string">'邮箱不能为空'</span>,<span class="string">'邮箱输入错误'</span>);</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;,</span><br><span class="line">    todoAjax:<span class="function"><span class="keyword">function</span> (<span class="params"></span>)</span>&#123;</span><br><span class="line">        $(<span class="string">".list .btn-submit"</span>).on(<span class="string">'click'</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">            <span class="keyword">var</span> _name = $.trim($(<span class="string">".name"</span>).val()),</span><br><span class="line">                _mobile = $.trim($(<span class="string">".mobile"</span>).val()),</span><br><span class="line">                _email = $.trim($(<span class="string">".email"</span>).val()),</span><br><span class="line">                _age = $.trim($(<span class="string">".age"</span>).val()),</span><br><span class="line">                _address = $.trim($(<span class="string">".address"</span>).val());</span><br><span class="line">            <span class="keyword">var</span> data =&#123;</span><br><span class="line">                name:_name,</span><br><span class="line">                mobile:_mobile,</span><br><span class="line">                email:_email,</span><br><span class="line">                age:_age,</span><br><span class="line">                address:_address</span><br><span class="line">            &#125;;</span><br><span class="line">            <span class="keyword">if</span>(_name==<span class="string">''</span>|| _mobile==<span class="string">''</span> || _email ==<span class="string">''</span> || $(<span class="string">".tip-error"</span>).is(<span class="string">":visible"</span>)) &#123;</span><br><span class="line">                alert(<span class="string">"请输入正确信息"</span>);</span><br><span class="line">            &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">                $.ajax(&#123;</span><br><span class="line">                    type: <span class="string">"POST"</span>, <span class="comment">//请求方式</span></span><br><span class="line">                    url: <span class="string">"http://localhost:3333/getlists"</span>, <span class="comment">//请求路径</span></span><br><span class="line">                    <span class="keyword">async</span>: <span class="literal">true</span>, <span class="comment">//异步</span></span><br><span class="line">                    data: data,  <span class="comment">//传参</span></span><br><span class="line">                    dataType: <span class="string">'json'</span>, <span class="comment">//返回值类型</span></span><br><span class="line">                    success: <span class="function"><span class="keyword">function</span> (<span class="params">msg</span>) </span>&#123;</span><br><span class="line">                        <span class="keyword">if</span>(msg.code ==<span class="string">'200'</span>)&#123;</span><br><span class="line">                            </span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;,</span><br><span class="line">                    error: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;);</span><br><span class="line">            &#125;   </span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">$(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  obj.init();</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p><strong>封装三</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">base</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> self = <span class="keyword">this</span>;</span><br><span class="line">    <span class="keyword">this</span>.blur_name = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="keyword">var</span> cur = $(<span class="keyword">this</span>);</span><br><span class="line">        <span class="keyword">var</span> value = cur.val();</span><br><span class="line">        <span class="keyword">var</span> filter  = <span class="regexp">/^[\u4e00-\u9fa5]&#123;2,4&#125;$/</span>;   <span class="comment">//正则</span></span><br><span class="line">        self.formEvent(cur,value,filter,<span class="string">"用户名不能为空"</span>,<span class="string">"用户名错误"</span>);</span><br><span class="line">    &#125;;</span><br><span class="line">    <span class="keyword">this</span>.blur_mobile = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="keyword">var</span> cur = $(<span class="keyword">this</span>);</span><br><span class="line">        <span class="keyword">var</span> value = cur.val();</span><br><span class="line">        <span class="keyword">var</span> filter  = <span class="regexp">/^((\+?86)|(\(\+86\)))?(13[012356789][0-9]&#123;8&#125;|15[012356789][0-9]&#123;8&#125;|18[02356789][0-9]&#123;8&#125;|147[0-9]&#123;8&#125;|1349[0-9]&#123;7&#125;)$/</span>;</span><br><span class="line">        self.formEvent(cur,value,filter,<span class="string">"手机号不能为空"</span>,<span class="string">"手机号错误"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">this</span>.blur_email = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="keyword">var</span> cur = $(<span class="keyword">this</span>);</span><br><span class="line">        <span class="keyword">var</span> value = cur.val();</span><br><span class="line">        <span class="keyword">var</span> filter  = <span class="regexp">/^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]&#123;2,4&#125;)+$/</span>;   <span class="comment">//正则</span></span><br><span class="line">        self.formEvent(cur,value,filter,<span class="string">"邮箱不能为空"</span>,<span class="string">"邮箱错误"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">this</span>.formEvent= <span class="function"><span class="keyword">function</span>(<span class="params">cur,value,filter,text1,text2</span>)</span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(value==<span class="string">''</span>)&#123;</span><br><span class="line">            cur.siblings(<span class="string">".tip-error"</span>).show().text(text1)</span><br><span class="line">        &#125;<span class="keyword">else</span> <span class="keyword">if</span>(!filter.test(value))&#123;   <span class="comment">//正则匹配</span></span><br><span class="line">            cur.siblings(<span class="string">".tip-error"</span>).show().text(text2)</span><br><span class="line">        &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">            cur.siblings(<span class="string">".tip-error"</span>).hide();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">bind</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">var</span> self = <span class="keyword">this</span>;  </span><br><span class="line">    </span><br><span class="line">    <span class="keyword">this</span>.init = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="comment">//1、成为焦点，错误提示隐藏</span></span><br><span class="line">        $(<span class="string">".list ul li input"</span>).focus(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">            $(<span class="keyword">this</span>).siblings(<span class="string">".tip-error"</span>).hide();</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//2、失去焦点，1）是否为空  2）格式校验</span></span><br><span class="line">        $(<span class="string">".name"</span>).blur(<span class="keyword">this</span>.blur_name);</span><br><span class="line">        $(<span class="string">".mobile"</span>).blur(<span class="keyword">this</span>.blur_mobile);</span><br><span class="line">        $(<span class="string">".email"</span>).blur(<span class="keyword">this</span>.blur_email);</span><br><span class="line">        </span><br><span class="line">        <span class="comment">//3）提交   判断</span></span><br><span class="line">        $(<span class="string">".btn-submit"</span>).click(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">            <span class="keyword">var</span> _name=$.trim($(<span class="string">".name"</span>).val()),</span><br><span class="line">                _mobile=$.trim($(<span class="string">".mobile"</span>).val()),</span><br><span class="line">                _email=$.trim($(<span class="string">".email"</span>).val()),</span><br><span class="line">                _age=$.trim($(<span class="string">".age"</span>).val()),</span><br><span class="line">                _address=$.trim($(<span class="string">".address"</span>).val());</span><br><span class="line">            <span class="keyword">var</span> data = &#123;</span><br><span class="line">                name:_name,</span><br><span class="line">                mobile:_mobile,</span><br><span class="line">                email:_email,</span><br><span class="line">                age:_age,</span><br><span class="line">                address:_address</span><br><span class="line">            &#125;;</span><br><span class="line">            <span class="keyword">if</span>(_name==<span class="string">""</span> || _mobile==<span class="string">""</span>||_email==<span class="string">""</span> || $(<span class="string">".tip-error"</span>).is(<span class="string">":visible"</span>))&#123;</span><br><span class="line">                alert(<span class="string">"请输入正确信息"</span>);</span><br><span class="line">            &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">                $.ajax(&#123;</span><br><span class="line">                    type:<span class="string">"post"</span>,<span class="comment">//请求方式</span></span><br><span class="line">                    url: <span class="string">"http://localhost:3000/form_info"</span>, <span class="comment">//请求路径</span></span><br><span class="line">                    data:data,<span class="comment">//传参数</span></span><br><span class="line">                    dataType:<span class="string">"json"</span>,</span><br><span class="line">                    success:<span class="function"><span class="keyword">function</span>(<span class="params">msg</span>)</span>&#123;</span><br><span class="line">                        <span class="built_in">console</span>.log(msg);</span><br><span class="line">                    &#125;,</span><br><span class="line">                    error:<span class="function"><span class="keyword">function</span>(<span class="params">error</span>)</span>&#123;</span><br><span class="line">                        cosnole.log(error);</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;)</span><br><span class="line">            &#125;</span><br><span class="line">                </span><br><span class="line">        &#125;)</span><br><span class="line">     &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    $(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    bind.prototype = <span class="keyword">new</span> base();</span><br><span class="line">    <span class="keyword">var</span> valid = <span class="keyword">new</span> bind();</span><br><span class="line">    valid.init();</span><br><span class="line">    &#125;)</span><br></pre></td></tr></table></figure>
+<p><strong>html</strong></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"main"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"top"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">""</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">h2</span>&gt;</span>请完善以下信息<span class="tag">&lt;/<span class="name">h2</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"list"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">ul</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">li</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">label</span>&gt;</span>姓名<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">name</span>=<span class="string">"name"</span> <span class="attr">class</span>=<span class="string">"name"</span> <span class="attr">placeholder</span>=<span class="string">"输入您的姓名"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"tip-error"</span>&gt;</span><span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">li</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">label</span>&gt;</span>手机<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">name</span>=<span class="string">"mobile"</span> <span class="attr">class</span>=<span class="string">"mobile"</span> <span class="attr">placeholder</span>=<span class="string">"输入您的手机"</span> &gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"tip-error"</span>&gt;</span><span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">li</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">label</span>&gt;</span>电子邮箱<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">name</span>=<span class="string">"email"</span> <span class="attr">class</span>=<span class="string">"email"</span> <span class="attr">placeholder</span>=<span class="string">"输入您的电子邮箱"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"tip-error"</span>&gt;</span><span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">li</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">label</span>&gt;</span>年龄<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">name</span>=<span class="string">"age"</span> <span class="attr">class</span>=<span class="string">"age"</span> <span class="attr">placeholder</span>=<span class="string">"输入您的年龄"</span> <span class="attr">maxlength</span>=<span class="string">"3"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"tip-error"</span>&gt;</span><span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">li</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">label</span>&gt;</span>通讯地址<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">name</span>=<span class="string">"address"</span> <span class="attr">class</span>=<span class="string">"address"</span> <span class="attr">placeholder</span>=<span class="string">"输入您的通讯地址"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"tip-error"</span>&gt;</span><span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">li</span> <span class="attr">class</span>=<span class="string">"fn-textcenter"</span>&gt;</span><span class="tag">&lt;<span class="name">a</span> <span class="attr">class</span>=<span class="string">"btn-blue btn-submit"</span>&gt;</span>提交<span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>代码中涉及到ajax请求，这个需要启一个node服务，关于ajax和前后台数据交互的分享我会在以后的博文中更新~</p>
+<p>效果图如下：<br><img src="https://img-blog.csdnimg.cn/20190203133652677.gif" alt="在这里插入图片描述"></p>
+
+    
+  
+</div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2019/02/17/JavaScript面向对象（1）-封装/">JavaScript面向对象（1）----封装</a></p>
+        <p><span>文章作者:</span><a href="/" title="访问 Jake Zhang 的个人博客">Jake Zhang</a></p>
+        <p><span>发布时间:</span>2019年02月17日 - 00时02分</p>
+        <p><span>最后更新:</span>2019年02月17日 - 00时10分</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2019/02/17/JavaScript面向对象（1）-封装/" title="JavaScript面向对象（1）----封装">http://yoursite.com/2019/02/17/JavaScript面向对象（1）-封装/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://yoursite.com/2019/02/17/JavaScript面向对象（1）-封装/　　作者: Jake Zhang" title=""></span>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/cn/" title="中国大陆 (CC BY-NC-SA 3.0 CN)" target="_blank">"署名-非商用-相同方式共享 3.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+<nav id="article-nav">
+  
+    <a href="/2019/02/17/JavaScript面向对象（2）-继承/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          JavaScript面向对象（2）----继承
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2019/02/16/this关键字的深入理解/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">this关键字的深入理解</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1、js面向对象的概念（个人理解）"><span class="toc-number">1.</span> <span class="toc-text">1、js面向对象的概念（个人理解）</span></a></li></ol>
+</div>
+<style>
+    .left-col .switch-btn {
+        display: none;
+    }
+    .left-col .switch-area {
+        display: none;
+    }
+</style>
+<input type="button" id="tocButton" value="隐藏目录" title="点击按钮隐藏或者显示文章目录">
+
+<script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+
+<script>
+    var valueHide = "隐藏目录";
+    var valueShow = "显示目录";
+    if ($(".left-col").is(":hidden")) {
+        $("#tocButton").attr("value", valueShow);
+    }
+    $("#tocButton").click(function() {
+        if ($("#toc").is(":hidden")) {
+            $("#tocButton").attr("value", valueHide);
+            $("#toc").slideDown(320);
+            $(".switch-btn, .switch-area").fadeOut(300);
+        }
+        else {
+            $("#tocButton").attr("value", valueShow);
+            $("#toc").slideUp(350);
+            $(".switch-btn, .switch-area").fadeIn(500);
+        }
+    })
+    if ($(".toc").length < 1) {
+        $("#toc, #tocButton").hide();
+        $(".switch-btn, .switch-area").show();
+    }
+</script>
+
+
+
+
+<div class="bdsharebuttonbox">
+	<a href="#" class="fx fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+	<a href="#" class="fx fa-weixin bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+	<a href="#" class="fx fa-qq bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a>
+	<a href="#" class="fx fa-facebook-official bds_fbook" data-cmd="fbook" title="分享到Facebook"></a>
+	<a href="#" class="fx fa-twitter bds_twi" data-cmd="twi" title="分享到Twitter"></a>
+	<a href="#" class="fx fa-linkedin bds_linkedin" data-cmd="linkedin" title="分享到linkedin"></a>
+	<a href="#" class="fx fa-files-o bds_copy" data-cmd="copy" title="分享到复制网址"></a>
+</div>
+<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"2","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+
+
+
+
+    
+        <section class="changyan" id="comments">
+  <!--<div id="uyan_frame"></div>-->
+  <div id="SOHUCS"></div>
+  <script charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/changyan.js"></script>
+  <script type="text/javascript">
+    window.changyan.api.config({
+      appid: 'xxxx',
+      conf: 'xxxxxxxxx'
+    });
+  </script>
+</section>
+    
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/2019/02/17/JavaScript面向对象（2）-继承/" title="上一篇: JavaScript面向对象（2）----继承">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+        
+            <a href="/2019/02/16/this关键字的深入理解/" title="下一篇: this关键字的深入理解">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2019/02/17/JavaScript面向对象（2）-继承/">JavaScript面向对象（2）----继承</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/02/17/JavaScript面向对象（1）-封装/">JavaScript面向对象（1）----封装</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/02/16/this关键字的深入理解/">this关键字的深入理解</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/02/16/Vue实现商城购物清单/">Vue实现商城购物清单</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/02/16/reduce-和reduceRight-方法/">reduce()和reduceRight()方法</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/02/14/详述JavaScript数据类型/">详述JavaScript数据类型</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/02/14/hexo搭建个人博客感想/">hexo github搭建个人博客的感想</a></li></ul>
+    
+<script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+
+    <script>
+        $(".post-list").addClass("toc-article");
+        // $(".post-list-item a").attr("target","_blank");
+        $("#post-nav-button > a:nth-child(2)").click(function() {
+            $(".fa-bars, .fa-times").toggle();
+            $(".post-list").toggle(300);
+            if ($(".toc").length > 0) {
+                $("#toc, #tocButton").toggle(200, function() {
+                    if ($(".switch-area").is(":visible")) {
+                        $("#toc, .switch-btn, .switch-area").toggle();
+                        $("#tocButton").attr("value", valueHide);
+                        }
+                    })
+            }
+            else {
+                $(".switch-btn, .switch-area").fadeToggle(300);
+            }
+        })
+    </script>
+
+
+
+
+    <script>
+        
+    </script>
+
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                &copy; 2019 Jake Zhang
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank">Hexo &nbsp;&nbsp;</a><a href="https://github.com/maochunguang" target="_blank">Blog</a> by tommy
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style="display:none">
+                        <span id="site-visit">极客到访数: 
+                            <span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>, </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style="display:none">
+                        <span id="page-visit">本页阅读量: 
+                            <span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+
+    </div>
+    
+<script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+
+<script src="/js/main.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var backgroundnum = 1;
+            var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+            $("#mobile-nav").css({"background-image": backgroundimg,"background-size": "cover","background-position": "center"});
+            $(".left-col").css({"background-image": backgroundimg,"background-size": "cover","background-position": "center"});
+        })
+    </script>
+
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'xxxxx', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+
+	<script>
+	var _hmt = _hmt || [];
+	(function() {
+	  var hm = document.createElement("script");
+	  hm.src = "//hm.baidu.com/hm.js?xxxxxx";
+	  var s = document.getElementsByTagName("script")[0]; 
+	  s.parentNode.insertBefore(hm, s);
+	})();
+	</script>
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<div class="scroll" id="scroll">
+    <a href="#"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    $(document).ready(function() {
+        if ($("#comments").length < 1) {
+            $("#scroll > a:nth-child(2)").hide();
+        };
+    })
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+
+  </div>
+</body>
+</html>
