@@ -17,7 +17,7 @@
 <meta property="og:site_name" content="Jake Zhang">
 <meta property="og:description" content="闭包（closure）是javascript的一大难点，也是它的特色。很多高级应用都要依靠闭包来实现。 要理解闭包，首先要理解javascript的全局变量和局部变量。 javascript语言的特别之处就在于：函数内部可以直接读取全局变量，但是在函数外部无法读取函数内部的局部变量。 function f1(){     var a=10;     function f2(){     alert">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-03-05T15:54:17.592Z">
+<meta property="og:updated_time" content="2019-03-05T15:58:14.686Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="前端学习——闭包">
 <meta name="twitter:description" content="闭包（closure）是javascript的一大难点，也是它的特色。很多高级应用都要依靠闭包来实现。 要理解闭包，首先要理解javascript的全局变量和局部变量。 javascript语言的特别之处就在于：函数内部可以直接读取全局变量，但是在函数外部无法读取函数内部的局部变量。 function f1(){     var a=10;     function f2(){     alert">
@@ -311,15 +311,12 @@
     alert(a); // 10
     }
 }
-</code></pre><p>##如何从外部读取函数内部的局部变量？</p>
-<p>我们有时候需要获取到函数内部的局部变量，正常情况下，这是办不到的！只有通过变通的方法才能实现。那就是在函数内部，再定义一个函数。</p>
-<p>##闭包的概念</p>
-<p>上面代码中的f2函数，就是闭包。</p>
+</code></pre><h2 id="如何从外部读取函数内部的局部变量？"><a href="#如何从外部读取函数内部的局部变量？" class="headerlink" title="如何从外部读取函数内部的局部变量？"></a>如何从外部读取函数内部的局部变量？</h2><p>我们有时候需要获取到函数内部的局部变量，正常情况下，这是办不到的！只有通过变通的方法才能实现。那就是在函数内部，再定义一个函数。</p>
+<h2 id="闭包的概念"><a href="#闭包的概念" class="headerlink" title="闭包的概念"></a>闭包的概念</h2><p>上面代码中的f2函数，就是闭包。</p>
 <p>各种专业文献的闭包定义都非常抽象，我的理解是: 闭包就是能够读取其他函数内部变量的函数。</p>
 <p>由于在javascript中，只有函数内部的子函数才能读取局部变量，所以说，闭包可以简单理解成“定义在一个函数内部的函数“。</p>
 <p>所以，在本质上，闭包是将函数内部和函数外部连接起来的桥梁。</p>
-<p>##闭包的用途</p>
-<p>闭包可以用在许多地方。它的最大用处有两个，一个是前面提到的可以读取函数内部的变量，另一个就是让这些变量的值始终保持在内存中，不会在f1调用后被自动清除。</p>
+<h2 id="闭包的用途"><a href="#闭包的用途" class="headerlink" title="闭包的用途"></a>闭包的用途</h2><p>闭包可以用在许多地方。它的最大用处有两个，一个是前面提到的可以读取函数内部的变量，另一个就是让这些变量的值始终保持在内存中，不会在f1调用后被自动清除。</p>
 <p>为什么会这样呢？原因就在于f1是f2的父函数，而f2被赋给了一个全局变量，这导致f2始终在内存中，而f2的存在依赖于f1，因此f1也始终在内存中，不会在调用结束后，被垃圾回收机制（garbage collection）回收。</p>
 <p>在我们平时的代码中经常会用到闭包，比如在构造函数中</p>
 <pre><code>function a(){
@@ -512,7 +509,7 @@ console.log(p.getName());  // Tom
         <p><span>本文标题:</span><a href="/2019/03/05/前端学习——闭包/">前端学习——闭包</a></p>
         <p><span>文章作者:</span><a href="/" title="访问 Jake Zhang 的个人博客">Jake Zhang</a></p>
         <p><span>发布时间:</span>2019年03月05日 - 23时27分</p>
-        <p><span>最后更新:</span>2019年03月05日 - 23时54分</p>
+        <p><span>最后更新:</span>2019年03月05日 - 23时58分</p>
         <p>
             <span>原始链接:</span><a class="post-url" href="/2019/03/05/前端学习——闭包/" title="前端学习——闭包">http://yoursite.com/2019/03/05/前端学习——闭包/</a>
             <span class="copy-path" data-clipboard-text="原文: http://yoursite.com/2019/03/05/前端学习——闭包/　　作者: Jake Zhang" title=""></span>
@@ -540,7 +537,7 @@ console.log(p.getName());  // Tom
 
     <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
-    
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#如何从外部读取函数内部的局部变量？"><span class="toc-number">1.</span> <span class="toc-text">如何从外部读取函数内部的局部变量？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#闭包的概念"><span class="toc-number">2.</span> <span class="toc-text">闭包的概念</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#闭包的用途"><span class="toc-number">3.</span> <span class="toc-text">闭包的用途</span></a></li></ol>
 </div>
 <style>
     .left-col .switch-btn {
