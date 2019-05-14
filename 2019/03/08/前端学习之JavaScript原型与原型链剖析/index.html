@@ -10,7 +10,7 @@
   <title>前端学习之JavaScript原型与原型链剖析 | Jake Zhang</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="普通对象和函数对象 在前面整理JavaScript面向对象的文章中我就有写到JS所有对象分为函数对象和普通对象。凡是通过new Function创建的对象都是函数对象，其他都是普通对象（通常通过Object创建），可以通过typeof来判断，由function创造出来的函数，比如： function f1() {};  typeof f1 //&amp;quot;function&amp;quot;  var f">
-<meta name="keywords" content="前端,JavaScript">
+<meta name="keywords" content="JavaScript,前端">
 <meta property="og:type" content="article">
 <meta property="og:title" content="前端学习之JavaScript原型与原型链剖析">
 <meta property="og:url" content="http://yoursite.com/2019/03/08/前端学习之JavaScript原型与原型链剖析/index.html">
@@ -213,7 +213,7 @@
                 
                 <section class="switch-part switch-part4">
                 
-                    <div id="js-aboutme">爱动漫,爱游戏,爱编程,爱运动,爱的太多了!</div>
+                    <div id="js-aboutme">爱动漫,爱王者荣耀,爱编程,爱运动,爱的太多了!</div>
                 </section>
                 
             </div>
@@ -602,7 +602,7 @@ console.log(dog.species) // 食肉动物
 
     <script>
         $(document).ready(function() {
-            var backgroundnum = 1;
+            var backgroundnum = 5;
             var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
             $("#mobile-nav").css({"background-image": backgroundimg,"background-size": "cover","background-position": "center"});
             $(".left-col").css({"background-image": backgroundimg,"background-size": "cover","background-position": "center"});

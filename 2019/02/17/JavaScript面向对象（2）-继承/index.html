@@ -10,7 +10,7 @@
   <title>JavaScript面向对象（2）----继承 | Jake Zhang</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="2019了，又老了一岁，首先呢，祝大家新年快乐，也祝大家开年大吉，今天正式开工了。在前一篇文章中跟大家分享了js面向对象的基本概念及一个封装的小demo，今天我们继续分享js面向对象中的继承。说实在话，我在学继承时老师说了很多种继承方式，但到现在我就只记得“寄生组合继承”，因为老师说这是最优最好的继承方式。最近因为自己在整理自己的前端知识体系，就心心念念的想好好的整理一番js面向对象这个知识点。本">
-<meta name="keywords" content="前端,JavaScript">
+<meta name="keywords" content="JavaScript,前端">
 <meta property="og:type" content="article">
 <meta property="og:title" content="JavaScript面向对象（2）----继承">
 <meta property="og:url" content="http://yoursite.com/2019/02/17/JavaScript面向对象（2）-继承/index.html">
@@ -213,7 +213,7 @@
                 
                 <section class="switch-part switch-part4">
                 
-                    <div id="js-aboutme">爱动漫,爱游戏,爱编程,爱运动,爱的太多了!</div>
+                    <div id="js-aboutme">爱动漫,爱王者荣耀,爱编程,爱运动,爱的太多了!</div>
                 </section>
                 
             </div>
@@ -584,7 +584,7 @@
 
     <script>
         $(document).ready(function() {
-            var backgroundnum = 1;
+            var backgroundnum = 5;
             var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
             $("#mobile-nav").css({"background-image": backgroundimg,"background-size": "cover","background-position": "center"});
             $(".left-col").css({"background-image": backgroundimg,"background-size": "cover","background-position": "center"});

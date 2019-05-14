@@ -10,7 +10,7 @@
   <title>reduce()和reduceRight()方法 | Jake Zhang</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="昨天在看一篇提升js性能的文章中看到数组中reduce()方法的应用，由于我在之前的es6学习中没有了解过这个方法，在我所看的文章中感觉这个方法挺有意思的，然后我查了点资料，前后看了几篇文章，自己找了几个例子敲了敲，瞬间感觉内心美滋滋的，所以今天我总结了下，在这里小结一下reduce()方法的概念和几个小例子。 一、reduce()方法 reduce()方法接收一个函数callbackfn作为累加">
-<meta name="keywords" content="前端,JavaScript">
+<meta name="keywords" content="JavaScript,前端">
 <meta property="og:type" content="article">
 <meta property="og:title" content="reduce()和reduceRight()方法">
 <meta property="og:url" content="http://yoursite.com/2019/02/16/reduce-和reduceRight-方法/index.html">
@@ -211,7 +211,7 @@
                 
                 <section class="switch-part switch-part4">
                 
-                    <div id="js-aboutme">爱动漫,爱游戏,爱编程,爱运动,爱的太多了!</div>
+                    <div id="js-aboutme">爱动漫,爱王者荣耀,爱编程,爱运动,爱的太多了!</div>
                 </section>
                 
             </div>
@@ -654,7 +654,7 @@
 
     <script>
         $(document).ready(function() {
-            var backgroundnum = 1;
+            var backgroundnum = 5;
             var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
             $("#mobile-nav").css({"background-image": backgroundimg,"background-size": "cover","background-position": "center"});
             $(".left-col").css({"background-image": backgroundimg,"background-size": "cover","background-position": "center"});
