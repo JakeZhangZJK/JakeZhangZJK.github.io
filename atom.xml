@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2019-03-08T03:41:24.515Z</updated>
+  <updated>2019-05-14T15:15:26.751Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,29 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>box-sizing详解</title>
+    <link href="http://yoursite.com/2019/05/14/box-sizing%E8%AF%A6%E8%A7%A3/"/>
+    <id>http://yoursite.com/2019/05/14/box-sizing详解/</id>
+    <published>2019-05-14T11:30:05.000Z</published>
+    <updated>2019-05-14T15:15:26.751Z</updated>
+    
+    <content type="html"><![CDATA[<p>刚刚实习回来好久都没有更新博文了，今天在复习html和css时遇到box-sizing，我记得上次面试的时候面试官就问过box-sizing的属性值及使用场景，当时回答的不是很好。今天我特意看了几篇文章，就此做一个总结。<br>首先复习一下盒子模型：<br>在写html与css的过程中，我们可以将每一个元素看做一个盒子，对于普通的浏览器以及IE浏览器，有两套不同的解析盒子的方法，第一种是W3C标准盒子模型，第二种是IE盒子模型。</p><p><strong>w3c标准盒子模型</strong></p><p>w3c盒子width = contentWidth<br><img src="https://img-blog.csdnimg.cn/20190514220230284.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM5NzM1MDQw,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br><strong>IE盒子模型</strong></p><p>IE盒子 width= contentWidth+2<em>padding+2</em>border<br><img src="https://img-blog.csdnimg.cn/20190514221154341.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM5NzM1MDQw,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p><p>这两个模型的唯一区别是计算width和height时，IE盒子模型包含padding和border, W3C盒子模型则不包括。<br>为了使页面在不同浏览器下呈现相同的效果，必须统一盒子模型，因为设置width或者height一般是必须用到的。所以在css3引入了box-sizing属性：</p><p>box-sizing属性主要用来控制元素的盒模型的解析模式，其有3个属性值。</p><p><strong>content-box</strong>（默认值）：让元素维持W3C的标准盒模型。元素的宽度/高度由border + padding + content的宽度/高度决定，设置width/height属性指的是content部分的宽/高；</p><p><strong>border-box</strong>：让元素维持IE传统盒模型（IE6以下版本和IE6~7的怪异模式）。设置width/height属性指的是border + padding + content；</p><p><strong>inherit</strong>：规定元素是从父元素那里继承box-sizing的属性值。</p><p>来看个demo</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html lang=&quot;en&quot;&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">  &lt;meta charset=&quot;UTF-8&quot;&gt;</span><br><span class="line">  &lt;title&gt;box-sizing使用场景分析&lt;/title&gt;</span><br><span class="line">  &lt;style&gt;</span><br><span class="line"></span><br><span class="line">      .layout &#123;</span><br><span class="line">          padding: 20px;</span><br><span class="line">          width: 200px;</span><br><span class="line">          height: 200px;</span><br><span class="line">          border: 2px solid chartreuse;</span><br><span class="line">      &#125;</span><br><span class="line">      .use-box-sizing &#123;</span><br><span class="line">          background: greenyellow;</span><br><span class="line">          -webkit-box-sizing: border-box;</span><br><span class="line">          -moz-box-sizing: border-box;</span><br><span class="line">          box-sizing: border-box;</span><br><span class="line">          </span><br><span class="line">          margin-bottom: 5px;</span><br><span class="line">      &#125;</span><br><span class="line">      .no-use-box-sizing &#123;</span><br><span class="line">          background: blueviolet;</span><br><span class="line">      &#125;</span><br><span class="line">  &lt;/style&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;div class=&quot;layout use-box-sizing&quot;&gt;使用box-sizing&lt;/div&gt;</span><br><span class="line">&lt;div class=&quot;layout no-use-box-sizing&quot;&gt;不使用box-sizing&lt;/div&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure><p>效果图如下：</p><p><img src="https://img-blog.csdnimg.cn/20190514224627827.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM5NzM1MDQw,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;刚刚实习回来好久都没有更新博文了，今天在复习html和css时遇到box-sizing，我记得上次面试的时候面试官就问过box-sizing的属性值及使用场景，当时回答的不是很好。今天我特意看了几篇文章，就此做一个总结。&lt;br&gt;首先复习一下盒子模型：&lt;br&gt;在写html与c
+      
+    
+    </summary>
+    
+    
+      <category term="css3" scheme="http://yoursite.com/tags/css3/"/>
+    
+  </entry>
   
   <entry>
     <title>前端学习之JavaScript原型与原型链剖析</title>
